@@ -22,12 +22,11 @@ class ChatsController < ApplicationController
   end
 
 
+
   def show
     @chat = Chat.find(params[:id])
     @chats = Chat.order(created_at: :asc)
   end
-
-  private
 
   private
 
