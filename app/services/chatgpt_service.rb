@@ -16,7 +16,8 @@ class ChatgptService
     body = {
       model: @model,
       messages: [{ role: 'user', content: message }],
-      temperature: 0.4
+      temperature: 0.4,
+      max_tokens: 450
     }
 
     response = HTTParty.post(api_url, body: body.to_json, headers: options[:headers], timeout: 15)

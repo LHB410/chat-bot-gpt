@@ -1,12 +1,16 @@
 <!-- app/views/chats/new.html.erb -->
-<h1>Chat</h1>
-<div data-controller="chat">
-  <form id="chat-form" >
-    <textarea id="chat-message" rows="4" data-target="chat.message"></textarea>
-    <button type="submit" data-action="click->chat#sendMessage">Send</button>
-  </form>
+<div class="container">
+  <h1>Chat</h1>
+  <div class="chat-wrapper">
+    <div data-controller="chat">
+      <form id="chat-form" >
+        <textarea id="chat-message" rows="4" data-target="chat.message"></textarea>
+        <button class="btn" type="submit" data-action="click->chat#sendMessage">Send</button>
+      </form>
 
-  <div id="chat-history">
-    <%= render 'chat_history', chat: @chat %>
+      <div id="chat-history">
+        <%= render 'chat_history', chat: @chat %>
+      </div>
+    </div>
   </div>
 </div>
