@@ -1,54 +1,12 @@
 <!-- app/views/chats/new.html.erb -->
 <h1>Chat</h1>
+<div data-controller="chat">
+  <form id="chat-form" >
+    <textarea id="chat-message" rows="4" data-target="chat.message"></textarea>
+    <button type="submit" data-action="click->chat#sendMessage">Send</button>
+  </form>
 
-<form id="chat-form">
-  <textarea id="chat-message" rows="4"></textarea>
-  <button type="submit">Send</button>
-</form>
-
-<div id="chat-history">
-  <%= render 'chat_history', chat: @chat %>
+  <div id="chat-history">
+    <%= render 'chat_history', chat: @chat %>
+  </div>
 </div>
-
-<script>
-  const form = document.getElementById('chat-form');
-  const messageInput = document.getElementById('chat-message');
-  const chatHistory = document.getElementById('chat-history');
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const message = messageInput.value.trim();
-    if (!message) return;
-
-    try {
-      const response = await fetch('/chats', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify({ chat: { message } })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create a chat entry.');
-      }
-
-      const { chat } = await response.json();
-      const chatEntry = document.createElement('div');
-      chatEntry.classList.add('chat-entry');
-      chatEntry.innerHTML = `
-        <p><strong>Message:</strong> ${chat.message}</p>
-        <p><strong>Response:</strong> ${chat.response}</p>
-        <p><strong>Created At:</strong> ${chat.created_at}</p>
-      `;
-
-      chatHistory.appendChild(chatEntry);
-      form.reset();
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Failed to create a chat entry.');
-    }
-  });
-</script>
